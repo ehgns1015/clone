@@ -1,0 +1,30 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "prettier",
+        "plugin:react/recommended",
+        "prettier/react",
+        "plugin:jest/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins":  ["react", "import", "jest"],
+    "rules": {
+        "no-unused-vars": "warn"
+    },
+    "parser": "babel-eslint",
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
+}
