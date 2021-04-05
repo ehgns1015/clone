@@ -1,0 +1,47 @@
+.active {
+  color: #252525;
+  text-transform: uppercase;
+}
+li :global(a) {
+  text-transform: uppercase;
+  color: #969696;
+}
+li :global(a:focus) {
+  text-transform: uppercase;
+  color: #969696;
+}
+
+@media (min-width: 480px) {
+  li {
+    font-size: 9px;
+    line-height: 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  li {
+    font-size: 14px;
+  }
+}
+.breadcrumb-wrapper {
+  padding-top: 108px;
+  background: #ffffff;
+}
+.breadcrumb-wrapper ol.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 0;
+  padding: 0;
+}
+.breadcrumb-wrapper .page-title h2 {
+  color: #797979;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+@media (min-width: 480px) {
+  .breadcrumb-wrapper ol.breadcrumb {
+    float: right !important;
+    min-height: 70px;
+  }
+}

@@ -16,7 +16,7 @@ function PaymentForm(props, ref) {
       </div>
       <div className="form-group">
         <label className="control-label">Full Name</label>
-        <input className="form-control" autoComplete="cc-name" name="fullName" type="text" placeholder="Full Nmae" />
+        <input className="form-control" autoComplete="cc-name" name="fullName" type="text" placeholder="Full Name" />
       </div>
       <div className="form-group">
         <div className="row">

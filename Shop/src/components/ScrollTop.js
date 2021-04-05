@@ -13,7 +13,7 @@ function ScrollTop({ children }) {
     };
   }, []);
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return <>{children}</>;
 }
 
 export default ScrollTop;

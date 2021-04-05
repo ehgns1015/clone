@@ -13,8 +13,7 @@
   },
   "plugins": ["react", "import"],
   "rules": {
-    "react/prop-types": 0, // or "off"
-    "no-unused-vars": "warn"
+    "no-console": "warn"
   },
   "parser": "babel-eslint",
   "settings": {

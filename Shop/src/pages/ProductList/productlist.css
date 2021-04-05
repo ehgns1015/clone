@@ -1,0 +1,27 @@
+.sidbar .card {
+  margin-bottom: 16px;
+}
+.sidbar .product-category-card .card-body {
+  padding: 0;
+}
+.sidbar .card-body .list-group-item {
+  border: none;
+}
+.sidbar .card-header {
+  background: #1ab394;
+  color: #fff;
+}
+.list-group-item {
+  font-weight: 400;
+  color: #646464;
+}
+
+.price-range-card .amount-wrapper input {
+  background-color: transparent;
+  border: 0;
+  width: 48px;
+  font-size: 14px;
+  color: #252525;
+  font-weight: 700;
+  text-align: right;
+}

@@ -1,0 +1,40 @@
+/* banner */
+.well {
+  height: 400px;
+  background-repeat: no-repeat;
+  background-image: url('../../assets/images/main.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+.well .caption {
+  position: absolute;
+  top: 150px;
+  left: 40px;
+  bottom: auto;
+  right: auto;
+  text-align: left;
+  color: white;
+}
+.well .caption h1 {
+  font-weight: 700;
+  font-size: 38px;
+  text-transform: uppercase;
+}
+
+.gaurantees {
+  padding-bottom: 60px;
+}
+.guarantees .box {
+  background-color: transparent;
+  border: 5px solid #e4e4e4;
+  transition: all 0.3s ease;
+  padding: 50px 20px;
+  margin-bottom: 35px;
+}
+.guarantees .box:hover {
+  border: 5px solid #1ab394;
+}
+.guarantees .box i {
+  font-size: 48px;
+  color: #1ab394;
+}
