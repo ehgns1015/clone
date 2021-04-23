@@ -5,7 +5,7 @@ import Drawer from '@/components/Drawer';
 import Cart from './Cart';
 import Footer from './Footer';
 import Navigation from '@/components/Navigation';
-import './publayout.css';
+
 
 export default function PublicLayout({ component, ...rest }) {
   const Component = component;

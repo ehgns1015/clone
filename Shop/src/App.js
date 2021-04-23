@@ -12,16 +12,18 @@ import './App.css';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <ScrollTop>
-        <Switch>
-          <PublicLayout path="/home" component={Home} />
-          <PublicLayout path="/products" component={ProductList} exact />
-          <PublicLayout path="/products/:id" component={ProductDetail} />
-          <PublicLayout path="/checkout" component={Checkout} exact />
-          <Redirect from="/" to="/home" />
-        </Switch>
-      </ScrollTop>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <ScrollTop>
+          <Switch>
+            <PublicLayout path="/home" component={Home} />
+            <PublicLayout path="/products" component={ProductList} exact />
+            <PublicLayout path="/products/:id" component={ProductDetail} />
+            <PublicLayout path="/checkout" component={Checkout} exact />
+            <Redirect from="/" to="/home" />
+          </Switch>
+        </ScrollTop>
+      </BrowserRouter>
+    </>
   );
 }

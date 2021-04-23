@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import allImage from '../assets/images/products/*.jpeg';
 import Rating from './Rating';
 import { Link } from 'react-router-dom';
-import './product.css';
 
 function Product({ id, name, price, info, avg_stars, total_reviews, onCartBtnClick = () => {} }) {
   const img = allImage[`item${id}`];

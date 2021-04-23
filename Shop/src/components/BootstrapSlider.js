@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import jQuery from 'jquery';
 import 'bootstrap-slider/dist/css/bootstrap-slider.min.css';
 import 'bootstrap-slider';
-import './bsslider.css';
 
 function BootstrapSlider(props) {
   const ref = React.useRef(null);

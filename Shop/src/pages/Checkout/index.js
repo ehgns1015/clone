@@ -4,7 +4,6 @@ import Breadcrumb from '@/components/Breadcrumb';
 import ShippingForm from './ShippingForm';
 import allImage from '@/assets/images/products/*.jpeg';
 import PaymentForm from './PaymentForm';
-import './checkout.css';
 
 const CartItem = ({ cartItem, onItemRemove }) => {
   const img = allImage[`item${cartItem.product.id}`];

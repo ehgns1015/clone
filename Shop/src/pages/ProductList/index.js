@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import Product from '@/components/Product';
 import BootstrapSlider from '@/components/BootstrapSlider';
-import './productlist.css';
+
 
 export default function ProductList(props) {
   const breadcrumbLinks = [{ to: '/home', name: 'Home' }, { name: 'Product List' }];

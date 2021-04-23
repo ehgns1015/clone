@@ -7,7 +7,7 @@ import ClothesImg from '../../assets/images/products/item6.jpeg';
 import ShoesImg from '../../assets/images/products/item7.jpeg';
 import GlovesImg from '../../assets/images/products/item10.jpeg';
 import Guarantees from './Guarantees';
-import './home.css';
+
 
 function Home(props) {
   const newArrivals = [

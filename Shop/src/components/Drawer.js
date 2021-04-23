@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import './drawer.css';
 
 function Drawer({ isOpen, component, ...rest }) {
   const Component = component;

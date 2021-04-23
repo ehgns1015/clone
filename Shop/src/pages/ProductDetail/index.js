@@ -6,7 +6,7 @@ import Product from '@/components/Product';
 import ProductTabs from './ProductTabs';
 import QuantitySelect from './QuantitySelect';
 import { Link } from 'react-router-dom';
-import './productdetail.css';
+
 
 export default function ProductDetail(props) {
   const id = props.match.params.id;

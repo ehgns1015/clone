@@ -4,7 +4,6 @@ import Logo from './Logo';
 import TopBar from './TopBar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
-import './navigation.css';
 
 export default function Navitation({ onCartClick, cartItemCounts, stickyPaths }) {
   const location = useLocation();
