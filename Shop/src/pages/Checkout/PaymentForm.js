@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 function PaymentForm(props, ref) {
   return (
@@ -16,7 +15,7 @@ function PaymentForm(props, ref) {
       </div>
       <div className="form-group">
         <label className="control-label">Full Name</label>
-        <input className="form-control" autoComplete="cc-name" name="fullName" type="text" placeholder="Full Name" />
+        <input className="form-control" autoComplete="cc-name" name="fullName" type="text" placeholder="Full Nmae" />
       </div>
       <div className="form-group">
         <div className="row">

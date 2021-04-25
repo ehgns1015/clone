@@ -7,7 +7,6 @@ import 'bootstrap-slider';
 function BootstrapSlider(props) {
   const ref = React.useRef(null);
   React.useLayoutEffect(() => {
-    //jQuery for bootstrapslider function
     const slider = jQuery(ref.current).slider({
       min: props.min,
       max: props.max,
@@ -19,7 +18,25 @@ function BootstrapSlider(props) {
       props.onSlide(v.value);
     });
   }, []);
-  return <input ref={ref} type="text" />;
+  return (
+    <>
+      <input ref={ref} type="text" />
+      <style jsx>{`
+        :global(.slider.slider-horizontal) {
+          width: 100%;
+        }
+        :global(.slider-handle) {
+          background-image: none;
+          border: 3px solid #1ab394;
+          background-color: #ffffff;
+        }
+        :global(.slider-selection) {
+          background-color: #1ab394;
+          background-image: none;
+        }
+      `}</style>
+    </>
+  );
 }
 
 BootstrapSlider.propTypes = {

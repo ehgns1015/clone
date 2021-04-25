@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Gaurantees() {
   return (
-    <React.Fragment>
+    <>
       <section className="container gaurantees mt-5">
         <div className="row copy">
           <div className="col-lg-12 text-center">
@@ -54,6 +54,6 @@ export default function Gaurantees() {
           color: #1ab394;
         }
       `}</style>
-    </React.Fragment>
+    </>
   );
 }

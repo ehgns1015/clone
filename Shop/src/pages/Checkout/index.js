@@ -1,15 +1,16 @@
 /* eslint-disable react/prop-types */
-import React, { PureComponent, createRef, useRef } from 'react';
+import React, { createRef } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import ShippingForm from './ShippingForm';
 import allImage from '@/assets/images/products/*.jpeg';
 import PaymentForm from './PaymentForm';
 
+//onItemRemove
 const CartItem = ({ cartItem, onItemRemove }) => {
   const img = allImage[`item${cartItem.product.id}`];
   return (
     <li key={cartItem.product.id} className="cart-item">
-      <a href="#remove" className="navy-link remove-item">
+      <a href="#remove" className="navy-link remove-item" onClick={onItemRemove}>
         ×
       </a>
       <a href="./product-detail.html">
@@ -26,8 +27,8 @@ const CartItem = ({ cartItem, onItemRemove }) => {
 
 export default function Checkout() {
   const breadcrumbLinks = [{ to: '/home', name: 'Home' }, { name: 'Checkout' }];
-  const shippingFormRef = useRef(null);
-  const paymentFormRef = useRef(null);
+  const shippingFormRef = createRef(null);
+  const paymentFormRef = createRef(null);
   const cartItems = [
     {
       product: {
@@ -42,11 +43,11 @@ export default function Checkout() {
       count: 3,
     },
   ];
-  const total = () => cartItems.reduce((acc, o) => acc + o.count * o.product.price, 0);
+
   const handleOrderComplete = (e) => {
     e.preventDefault();
-    const shippingFormData = new FormData(this.shippingFormRef.current);
-    const paymentFormData = new FormData(this.paymentFormRef.current);
+    const shippingFormData = new FormData(shippingFormRef.current);
+    const paymentFormData = new FormData(paymentFormRef.current);
     const rawFormData = Object.assign(
       {},
       Object.fromEntries(shippingFormData.entries()),
@@ -76,6 +77,9 @@ export default function Checkout() {
       totalPrice: total,
     });
   };
+
+  const total = () => cartItems.reduce((acc, o) => acc + o.count * o.product.price, 0);
+
   return (
     <>
       <Breadcrumb title="Checkout" links={breadcrumbLinks} />
@@ -85,13 +89,14 @@ export default function Checkout() {
             <h2 className="m-0">Shipping address</h2>
             <ShippingForm ref={shippingFormRef} />
           </div>
+
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-3 order-panel">
             <h2 className="m-0">YOUR ORDER</h2>
             <ul className="list-unstyled mb-4">{cartItems.map((cartItem) => CartItem({ cartItem }))}</ul>
             <div className="navy-line-full" />
             <div className="total-section px-3 py-4">
               <span>TOTAL:</span>
-              <span className="float-right m-0 price">{total}</span>
+              <span className="float-right m-0 price">{total()}</span>
             </div>
             <h2 className="mt-5">PAYMENT</h2>
             <PaymentForm ref={paymentFormRef} />
@@ -107,6 +112,29 @@ export default function Checkout() {
           </div>
         </div>
       </section>
+      <style jsx>{`
+        .checkout-section .form-horizontal .form-group {
+          margin: 0;
+          margin-bottom: 8px;
+        }
+        .order-panel {
+          border: 1px solid #ddd;
+          min-height: 500px;
+        }
+        .order-panel .total-section span {
+          font-size: 18px;
+          font-weight: 500;
+        }
+        .order-panel .checkout-btn {
+          width: 100%;
+        }
+        .checkout-section :global(.form-group label) {
+          display: inline-block;
+          max-width: 100%;
+          margin-bottom: 5px;
+          font-weight: 700;
+        }
+      `}</style>
     </>
   );
 }
