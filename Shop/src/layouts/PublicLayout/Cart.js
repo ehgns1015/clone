@@ -1,12 +1,18 @@
 import React, { memo } from 'react';
 import allImage from '@/assets/images/products/*.jpeg';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Store } from '@/data/configureStore';
+import { getTotal } from '@/data/cart/selectors';
+import { closeCart, removeCartItem } from '@/data/cart/actions';
 
-const CartItem = memo(function C({ id, name, price, count, onItemRemove }) {
+const CartItem = memo(function C({ id, name, price, count }) {
+  const { cartItemDispatch } = useContext(Store);
+
   const handleItemBtnClicked = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    onItemRemove({ id, name, price });
+    cartItemDispatch(removeCartItem(id));
   };
 
   return (
@@ -27,8 +33,10 @@ const CartItem = memo(function C({ id, name, price, count, onItemRemove }) {
 });
 
 // eslint-disable-next-line react/prop-types
-export default function Cart({ items, onItemRemove, onClose }) {
-  const total = items.reduce((acc, o) => acc + o.count * o.product.price, 0);
+export default function Cart() {
+  const { cartItemState, cartOpenDispatch } = useContext(Store);
+  const items = cartItemState;
+  const total = getTotal(items);
 
   const handleCheckoutBtnClicked = (e) => {
     if (total == 0) {
@@ -40,7 +48,7 @@ export default function Cart({ items, onItemRemove, onClose }) {
   const handleCloseBtnClicked = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    onClose();
+    cartOpenDispatch(closeCart());
   };
 
   return (
@@ -62,7 +70,6 @@ export default function Cart({ items, onItemRemove, onClose }) {
                 name={item.product.name}
                 price={item.product.price}
                 count={item.count}
-                onItemRemove={onItemRemove}
               />
             ))}
           </ul>

@@ -1,16 +1,22 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useContext } from 'react';
 import NavItem from './NavItem';
 import Logo from './Logo';
 import TopBar from './TopBar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
+import { Store } from '@/data/configureStore';
+import { selectCartItemCounts } from '@/data/cart/selectors';
+import { toggleCart } from '@/data/cart/actions';
 
-export default function Navigation({ onCartClick, cartItemCounts, stickyPaths }) {
+export default function Navigation({ stickyPaths }) {
   const location = useLocation();
+  const {cartItemState, cartOpenDispatch} = useContext(Store)
   const isStickyPath = stickyPaths.some((v) => new RegExp(v).test(location.pathname));
   const [isSticky, setSticky] = useState(false);
   const ref = useRef(null);
   const changeHeaderOn = 200;
+  const cartItemCounts = selectCartItemCounts(cartItemState);
+  const onCartClick = () => cartOpenDispatch(toggleCart())
 
   const handleScroll = () => {
     const sy = window.pageYOffset || document.documentElement.scrollTop;

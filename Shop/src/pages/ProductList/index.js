@@ -3,7 +3,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import Product from '@/components/Product';
 import BootstrapSlider from '@/components/BootstrapSlider';
 
-export default function ProductList(props, { onAddCartItem }) {
+export default function ProductList({ onAddCartItem }) {
   const breadcrumbLinks = [{ to: '/home', name: 'Home' }, { name: 'Product List' }];
   const categories = [
     { id: '1', name: 'Shirts', counts: 3 },

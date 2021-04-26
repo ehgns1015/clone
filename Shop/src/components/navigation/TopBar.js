@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { getUser } from '@/data/user/selectors.js';
+import { Store } from '@/data/configureStore';
+import { selectCartItemCounts } from '@/data/cart/selectors';
+import { toggleCart } from '@/data/cart/actions';
+
+const LoginSingup = () => (
+  <span>
+    <a href="#" data-toggle="modal" data-target="#login-modal">
+      Log in
+    </a>
+    <small>or</small>
+    <a href="#" data-toggle="modal" data-target="#signup-modal">
+      Sign Up
+    </a>
+  </span>
+);
+
+const UserInfo = ({ user }) => (
+  <a>
+    {user.name} ({user.email})
+  </a>
+);
 
 // eslint-disable-next-line react/prop-types
-export default function TopBar({ onCartClick, cartItemCounts }) {
+export default function TopBar() {
+  const { userState, cartItemState, cartOpenState, cartOpenDispatch } = useContext(Store);
+  const cartItemCounts = selectCartItemCounts(cartItemState);
+  const user = getUser(userState);
+  toggleCart;
   const handleCartBtnClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    onCartClick();
+    cartOpenDispatch(toggleCart());
   };
 
   return (
@@ -13,17 +39,7 @@ export default function TopBar({ onCartClick, cartItemCounts }) {
       <div className="flex-fill top-bar bg-dark">
         <div className="container">
           <ul className="flex-fill nav justify-content-end">
-            <li className="nav-item account-login mr-3">
-              <span>
-                <a href="#" data-toggle="modal" data-target="#login-modal">
-                  Log in
-                </a>
-                <small>or</small>
-                <a href="#" data-toggle="modal" data-target="#signup-modal">
-                  Sign Up
-                </a>
-              </span>
-            </li>
+            <li className="nav-item account-login mr-3">{user ? <UserInfo user={user} /> : <LoginSingup />}</li>
             <li className="nav-item cart">
               <a href="#" className="shopping-cart-btn" onClick={handleCartBtnClick}>
                 <i className="fas fa-shopping-cart"></i> Cart <span className="item-number">({cartItemCounts})</span>

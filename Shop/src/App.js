@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useEffect, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import { BrowserRouter, Switch, Redirect } from 'react-router-dom';
@@ -8,8 +8,19 @@ import PublicLayout from './layouts/PublicLayout';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
 import ScrollTop from './components/ScrollTop';
+import { login } from '@/data/user/actions';
+import { Store } from './data/configureStore';
 
 export default function App() {
+  const { userDispatch } = useContext(Store);
+  // useEffect(() => {
+  //   userDispatch(
+  //     login({
+  //       email: '',
+  //       password: '',
+  //     })
+  //   );
+  // }, []);
   return (
     <>
       <BrowserRouter>

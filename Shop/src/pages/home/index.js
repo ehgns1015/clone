@@ -1,75 +1,18 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import Product from '../../components/Product';
 import Banner from './Banner';
 import Collection from './Category';
-import WatchImg from '../../assets/images/products/item5.jpeg';
-import ClothesImg from '../../assets/images/products/item6.jpeg';
-import ShoesImg from '../../assets/images/products/item7.jpeg';
-import GlovesImg from '../../assets/images/products/item10.jpeg';
 import Gaurantees from './Gaurantees';
+import { Store } from '@/data/configureStore';
+import { getNewArrivals } from '@/data/home/actions';
 
 export default function Home({ onAddCartItem }) {
-  const newArrivals = [
-    {
-      id: '1',
-      name: 'React Note',
-      price: 2000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 4,
-      total_reviews: 200,
-    },
-    {
-      id: '2',
-      name: 'React Product 2',
-      price: 13000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 4,
-      total_reviews: 5,
-    },
-    {
-      id: '3',
-      name: 'React Product 3',
-      price: 4000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 2,
-      total_reviews: 10,
-    },
-    {
-      id: '4',
-      name: 'React Product 4',
-      price: 5000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 1,
-      total_reviews: 10,
-    },
-  ];
-  const categories = [
-    {
-      id: '1',
-      name: 'Watch',
-      to: '#',
-      img: WatchImg,
-    },
-    {
-      id: '2',
-      name: 'Clothes',
-      to: '#',
-      img: ClothesImg,
-    },
-    {
-      id: '3',
-      name: 'Shoes',
-      to: '#',
-      img: ShoesImg,
-    },
-    {
-      id: '4',
-      name: 'Gloves',
-      to: '#',
-      img: GlovesImg,
-    },
-  ];
-
+  const { homeState, homeDispatch } = useContext(Store);
+  const newArrivals = homeState.newArrivals;
+  const categories = homeState.featuredCollection;
+  useEffect(() => {
+    homeDispatch(getNewArrivals());
+  }, []);
   const handleProductCartClicked = (product) => onAddCartItem(product);
 
   return (

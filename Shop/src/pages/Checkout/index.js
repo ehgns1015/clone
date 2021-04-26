@@ -1,49 +1,44 @@
 /* eslint-disable react/prop-types */
-import React, { createRef } from 'react';
+import React, { memo, createRef, useContext } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import ShippingForm from './ShippingForm';
 import allImage from '@/assets/images/products/*.jpeg';
 import PaymentForm from './PaymentForm';
+import { Store } from '@/data/configureStore';
+import { getTotal } from '@/data/cart/selectors';
+import { removeCartItem } from '@/data/cart/actions';
 
 //onItemRemove
-const CartItem = ({ cartItem, onItemRemove }) => {
-  const img = allImage[`item${cartItem.product.id}`];
+const CartItem = memo(function C({ id, name, price, count, onItemRemove }) {
+  const handleItemBtnClicked = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onItemRemove({ id, name, price });
+  };
+
   return (
-    <li key={cartItem.product.id} className="cart-item">
-      <a href="#remove" className="navy-link remove-item" onClick={onItemRemove}>
+    <li className="cart-item">
+      <a onClick={handleItemBtnClicked} className="navy-link remove-item">
         ×
       </a>
       <a href="./product-detail.html">
-        <img width="250" height="250" src={img} alt={cartItem.product.name} className="p-3" />
-        {cartItem.product.name}
+        <img width="250" height="250" src={allImage[`item${id}`]} alt={name} className="p-3" />
+        {name}
       </a>
       <span className="quantity">
         {' '}
-        {cartItem.count} × <span className="price">{cartItem.product.price}</span>{' '}
+        {count} × <span className="price">{price} WON</span>{' '}
       </span>
     </li>
   );
-};
+});
 
 export default function Checkout() {
+  const { cartItemState } = useContext(Store);
   const breadcrumbLinks = [{ to: '/home', name: 'Home' }, { name: 'Checkout' }];
   const shippingFormRef = createRef(null);
   const paymentFormRef = createRef(null);
-  const cartItems = [
-    {
-      product: {
-        id: '3',
-        name: 'React Product 3',
-        price: 4000,
-        info: 'Lorem ipsum dolor sit amet',
-        avg_stars: 2,
-        total_reviews: 10,
-        category: { id: 5, name: 'Clothes' },
-      },
-      count: 3,
-    },
-  ];
-
+  const cartItems = cartItemState;
   const handleOrderComplete = (e) => {
     e.preventDefault();
     const shippingFormData = new FormData(shippingFormRef.current);
@@ -78,7 +73,7 @@ export default function Checkout() {
     });
   };
 
-  const total = () => cartItems.reduce((acc, o) => acc + o.count * o.product.price, 0);
+  const total = getTotal(cartItems);
 
   return (
     <>
@@ -92,11 +87,11 @@ export default function Checkout() {
 
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-3 order-panel">
             <h2 className="m-0">YOUR ORDER</h2>
-            <ul className="list-unstyled mb-4">{cartItems.map((cartItem) => CartItem({ cartItem }))}</ul>
+            <ul className="list-unstyled mb-4">{cartItems.map((cartItem, i) => <CartItem key={i} {...cartItem }/>)}</ul>
             <div className="navy-line-full" />
             <div className="total-section px-3 py-4">
               <span>TOTAL:</span>
-              <span className="float-right m-0 price">{total()}</span>
+              <span className="float-right m-0 price">{total}</span>
             </div>
             <h2 className="mt-5">PAYMENT</h2>
             <PaymentForm ref={paymentFormRef} />

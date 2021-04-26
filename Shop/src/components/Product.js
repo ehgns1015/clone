@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import allImage from '../assets/images/products/*.jpeg';
 import Rating from './Rating';
 import { Link } from 'react-router-dom';
+import { Store } from '@/data/configureStore';
+import { addCartItem } from '@/data/cart/actions';
 
-function Product({ id, name, price, info, avg_stars, total_reviews, onCartBtnClick = () => {} }) {
+function Product({ id, name, price, info, avg_stars, total_reviews }) {
+  const { cartItemState, cartItemDispatch } = useContext(Store);
   const img = allImage[`item${id}`];
 
   const handleCartBtnClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    onCartBtnClick({ id, name, price, info, avg_stars, total_reviews });
-    return false;
+    cartItemDispatch(addCartItem({ id, name, price, info, avg_stars, total_reviews }, 1));
   };
 
   return (
