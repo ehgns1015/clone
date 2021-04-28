@@ -47811,7 +47811,6 @@ function TopBar() {
     e.preventDefault();
     e.stopPropagation();
     cartOpenDispatch((0, _actions.toggleCart)());
-    console.log(cartOpenState);
   };
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
@@ -51406,6 +51405,7 @@ function PublicLayout(_ref) {
       }), /*#__PURE__*/_react.default.createElement(_Navigation.default, {
         stickyPaths: ['/products', '/products/.*', '/checkout']
       }), /*#__PURE__*/_react.default.createElement(Component, matchProps), /*#__PURE__*/_react.default.createElement(_Footer.default, null), modals.map(function (v, i) {
+        console.log(modals);
         var Modal = modalComponents[v.type];
         return /*#__PURE__*/_react.default.createElement(Modal, {
           key: v.type + ':' + i,
@@ -53732,49 +53732,47 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
+/* eslint-disable react/prop-types */
 //onItemRemove
-var CartItem = /*#__PURE__*/(0, _react.memo)(function C(_ref) {
-  var id = _ref.id,
-      name = _ref.name,
-      price = _ref.price,
-      count = _ref.count,
-      onItemRemove = _ref.onItemRemove;
+var CartItem = function CartItem(_ref) {
+  var cartItem = _ref.cartItem;
+
+  var _useContext = (0, _react.useContext)(_configureStore.Store),
+      cartItemDispatch = _useContext.cartItemDispatch;
 
   var handleItemBtnClicked = function handleItemBtnClicked(e) {
     e.preventDefault();
     e.stopPropagation();
-    onItemRemove({
-      id: id,
-      name: name,
-      price: price
-    });
+    cartItemDispatch((0, _actions.removeCartItem)(cartItem.product.id));
   };
 
+  var img = _.default["item".concat(cartItem.product.id)];
+
   return /*#__PURE__*/_react.default.createElement("li", {
+    key: cartItem.product.id,
     className: "cart-item"
   }, /*#__PURE__*/_react.default.createElement("a", {
     onClick: handleItemBtnClicked,
+    href: "#remove",
     className: "navy-link remove-item"
   }, "\xD7"), /*#__PURE__*/_react.default.createElement("a", {
     href: "./product-detail.html"
   }, /*#__PURE__*/_react.default.createElement("img", {
     width: "250",
     height: "250",
-    src: _.default["item".concat(id)],
-    alt: name,
+    src: img,
+    alt: cartItem.product.name,
     className: "p-3"
-  }), name), /*#__PURE__*/_react.default.createElement("span", {
+  }), cartItem.product.name), /*#__PURE__*/_react.default.createElement("span", {
     className: "quantity"
-  }, ' ', count, " \xD7 ", /*#__PURE__*/_react.default.createElement("span", {
+  }, ' ', cartItem.count, " \xD7 ", /*#__PURE__*/_react.default.createElement("span", {
     className: "price"
-  }, price, " WON"), ' '));
-});
+  }, cartItem.product.price), ' '));
+};
 
 function Checkout() {
-  var _useContext = (0, _react.useContext)(_configureStore.Store),
-      cartItemState = _useContext.cartItemState;
+  var _useContext2 = (0, _react.useContext)(_configureStore.Store),
+      cartItemState = _useContext2.cartItemState;
 
   var breadcrumbLinks = [{
     to: '/home',
@@ -53837,9 +53835,10 @@ function Checkout() {
   }, "YOUR ORDER"), /*#__PURE__*/_react.default.createElement("ul", {
     className: "jsx-168746122" + " " + "list-unstyled mb-4"
   }, cartItems.map(function (cartItem, i) {
-    return /*#__PURE__*/_react.default.createElement(CartItem, _extends({
-      key: i
-    }, cartItem));
+    return /*#__PURE__*/_react.default.createElement(CartItem, {
+      key: i,
+      cartItem: cartItem
+    });
   })), /*#__PURE__*/_react.default.createElement("div", {
     className: "jsx-168746122" + " " + "navy-line-full"
   }), /*#__PURE__*/_react.default.createElement("div", {
@@ -54407,7 +54406,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62732" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49256" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

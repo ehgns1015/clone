@@ -34,6 +34,7 @@ export default function PublicLayout({ component, ...rest }) {
           <Component {...matchProps} />
           <Footer />
           {modals.map((v, i) => {
+            console.log(modals)
             const Modal = modalComponents[v.type];
             return <Modal key={v.type + ':' + i} show={true} />;
           })}

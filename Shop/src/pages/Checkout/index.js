@@ -9,29 +9,30 @@ import { getTotal } from '@/data/cart/selectors';
 import { removeCartItem } from '@/data/cart/actions';
 
 //onItemRemove
-const CartItem = memo(function C({ id, name, price, count, onItemRemove }) {
-  const handleItemBtnClicked = (e) => {
+const CartItem = ({ cartItem }) => {
+  const {cartItemDispatch} = useContext(Store);
+  const handleItemBtnClicked = e => {
     e.preventDefault();
     e.stopPropagation();
-    onItemRemove({ id, name, price });
-  };
-
+    cartItemDispatch(removeCartItem(cartItem.product.id));
+  }
+  const img = allImage[`item${cartItem.product.id}`];
   return (
-    <li className="cart-item">
-      <a onClick={handleItemBtnClicked} className="navy-link remove-item">
+    <li key={cartItem.product.id} className="cart-item">
+      <a onClick={handleItemBtnClicked} href="#remove" className="navy-link remove-item">
         ×
       </a>
       <a href="./product-detail.html">
-        <img width="250" height="250" src={allImage[`item${id}`]} alt={name} className="p-3" />
-        {name}
+        <img width="250" height="250" src={img} alt={cartItem.product.name} className="p-3" />
+        {cartItem.product.name}
       </a>
       <span className="quantity">
         {' '}
-        {count} × <span className="price">{price} WON</span>{' '}
+        {cartItem.count} × <span className="price">{cartItem.product.price}</span>{' '}
       </span>
     </li>
   );
-});
+};
 
 export default function Checkout() {
   const { cartItemState } = useContext(Store);
@@ -87,7 +88,7 @@ export default function Checkout() {
 
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-3 order-panel">
             <h2 className="m-0">YOUR ORDER</h2>
-            <ul className="list-unstyled mb-4">{cartItems.map((cartItem, i) => <CartItem key={i} {...cartItem }/>)}</ul>
+            <ul className="list-unstyled mb-4">{cartItems.map((cartItem, i) => <CartItem key={i} cartItem={cartItem}/>)}</ul>
             <div className="navy-line-full" />
             <div className="total-section px-3 py-4">
               <span>TOTAL:</span>
