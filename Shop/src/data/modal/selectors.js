@@ -1,1 +1,1 @@
-export const getModals = (state) => state['modal'];
+export const selectIsOpen = (type) => (state) => state.find((v) => v.type === type);

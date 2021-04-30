@@ -7,7 +7,7 @@ import { Store } from '@/data/configureStore';
 import { addCartItem } from '@/data/cart/actions';
 
 function Product({ id, name, price, info, avg_stars, total_reviews }) {
-  const { cartItemState, cartItemDispatch } = useContext(Store);
+  const { cartItemDispatch } = useContext(Store);
   const img = allImage[`item${id}`];
 
   const handleCartBtnClick = (e) => {

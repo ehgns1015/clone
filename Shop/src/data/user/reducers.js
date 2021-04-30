@@ -4,7 +4,7 @@ const userInitialState = {
   [LOG_IN]: null,
 };
 
-function user(state = userInitialState, action = {}) {
+const user = (state = userInitialState, action = {}) => {
   switch (action.type) {
     case LOG_IN:
       return {

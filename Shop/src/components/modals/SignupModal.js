@@ -10,7 +10,7 @@ export default function LoginModal({ show, onHide }) {
   const ref = useFocusEffect();
   return (
     <>
-      <Modal show={show} onHide={handleHide} className="login-signup">
+      <Modal show={show} className="login-signup">
         <Modal.Header>
           <button type="button" onClick={handleHide} className="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>

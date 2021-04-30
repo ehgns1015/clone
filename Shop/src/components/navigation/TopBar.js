@@ -3,18 +3,31 @@ import { getUser } from '@/data/user/selectors.js';
 import { Store } from '@/data/configureStore';
 import { selectCartItemCounts } from '@/data/cart/selectors';
 import { toggleCart } from '@/data/cart/actions';
+import { showModal } from '@/data/modal/actions';
 
-const LoginSingup = () => (
-  <span>
-    <a href="#" data-toggle="modal" data-target="#login-modal">
-      Log in
-    </a>
-    <small>or</small>
-    <a href="#" data-toggle="modal" data-target="#signup-modal">
-      Sign Up
-    </a>
-  </span>
-);
+const LoginSingup = () => {
+  const { modalsDispatch } = useContext(Store);
+  const handleLoginClick = (e) => {
+    e.preventDefault();
+    modalsDispatch(showModal('LoginModal'));
+  };
+  const handleSignupClick = (e) => {
+    e.preventDefault();
+    modalsDispatch(showModal('SignupModal'));
+  };
+
+  return (
+    <span>
+      <a onClick={handleLoginClick} data-toggle="modal" data-target="#login-modal">
+        Log in
+      </a>
+      <small>or</small>
+      <a onClick={handleSignupClick} data-toggle="modal" data-target="#login-modal">
+        Sign Up
+      </a>
+    </span>
+  );
+};
 
 const UserInfo = ({ user }) => (
   <a>
@@ -24,7 +37,7 @@ const UserInfo = ({ user }) => (
 
 // eslint-disable-next-line react/prop-types
 export default function TopBar() {
-  const { userState, cartItemState, cartOpenState, cartOpenDispatch } = useContext(Store);
+  const { userState, cartItemState, cartOpenDispatch } = useContext(Store);
   const cartItemCounts = selectCartItemCounts(cartItemState);
   const user = getUser(userState);
   toggleCart;

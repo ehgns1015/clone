@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 import Drawer from '@/components/Drawer';
 import Cart from './Cart';
@@ -11,12 +11,12 @@ import { Store } from '@/data/configureStore';
 
 export default function PublicLayout({ component, ...rest }) {
   const Component = component;
-  const { cartOpenState, modalsState, } = useContext(Store);
-  const isShoppingCartOpen = cartOpenState
+  const { cartOpenState, modalsState } = useContext(Store);
   const modals = modalsState;
+  const isShoppingCartOpen = cartOpenState
   const modalComponents = {
     LoginModal,
-    SignupModal
+    SignupModal,
   };
 
   return (
@@ -34,7 +34,6 @@ export default function PublicLayout({ component, ...rest }) {
           <Component {...matchProps} />
           <Footer />
           {modals.map((v, i) => {
-            console.log(modals)
             const Modal = modalComponents[v.type];
             return <Modal key={v.type + ':' + i} show={true} />;
           })}

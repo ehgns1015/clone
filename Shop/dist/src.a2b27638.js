@@ -33392,7 +33392,6 @@ function Product(_ref) {
       total_reviews = _ref.total_reviews;
 
   var _useContext = (0, _react.useContext)(_configureStore.Store),
-      cartItemState = _useContext.cartItemState,
       cartItemDispatch = _useContext.cartItemDispatch;
 
   var img = _.default["item".concat(id)];
@@ -47752,7 +47751,52 @@ var getUser = function getUser(user) {
 };
 
 exports.getUser = getUser;
-},{"./actionTypes":"src/data/user/actionTypes.js"}],"src/components/Navigation/TopBar.js":[function(require,module,exports) {
+},{"./actionTypes":"src/data/user/actionTypes.js"}],"src/data/modal/actionTypes.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SHOW_MODAL = exports.CLOSE_MODAL = void 0;
+var CLOSE_MODAL = 'CLOSE_MODAL';
+exports.CLOSE_MODAL = CLOSE_MODAL;
+var SHOW_MODAL = 'SHOW_MODAL';
+exports.SHOW_MODAL = SHOW_MODAL;
+},{}],"src/data/modal/actions.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.showModal = exports.closeModal = void 0;
+
+var _actionTypes = require("./actionTypes");
+
+var closeModal = function closeModal() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return {
+    type: _actionTypes.CLOSE_MODAL,
+    payload: {
+      props: props
+    }
+  };
+};
+
+exports.closeModal = closeModal;
+
+var showModal = function showModal(type) {
+  var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return {
+    type: _actionTypes.SHOW_MODAL,
+    payload: {
+      type: type,
+      props: props
+    }
+  };
+};
+
+exports.showModal = showModal;
+},{"./actionTypes":"src/data/modal/actionTypes.js"}],"src/components/Navigation/TopBar.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -47772,6 +47816,8 @@ var _selectors2 = require("../../data/cart/selectors");
 
 var _actions = require("../../data/cart/actions");
 
+var _actions2 = require("../../data/modal/actions");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -47779,14 +47825,27 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LoginSingup = function LoginSingup() {
+  var _useContext = (0, _react.useContext)(_configureStore.Store),
+      modalsDispatch = _useContext.modalsDispatch;
+
+  var handleLoginClick = function handleLoginClick(e) {
+    e.preventDefault();
+    modalsDispatch((0, _actions2.showModal)('LoginModal'));
+  };
+
+  var handleSignupClick = function handleSignupClick(e) {
+    e.preventDefault();
+    modalsDispatch((0, _actions2.showModal)('SignupModal'));
+  };
+
   return /*#__PURE__*/_react.default.createElement("span", null, /*#__PURE__*/_react.default.createElement("a", {
-    href: "#",
+    onClick: handleLoginClick,
     "data-toggle": "modal",
     "data-target": "#login-modal"
   }, "Log in"), /*#__PURE__*/_react.default.createElement("small", null, "or"), /*#__PURE__*/_react.default.createElement("a", {
-    href: "#",
+    onClick: handleSignupClick,
     "data-toggle": "modal",
-    "data-target": "#signup-modal"
+    "data-target": "#login-modal"
   }, "Sign Up"));
 };
 
@@ -47797,11 +47856,10 @@ var UserInfo = function UserInfo(_ref) {
 
 
 function TopBar() {
-  var _useContext = (0, _react.useContext)(_configureStore.Store),
-      userState = _useContext.userState,
-      cartItemState = _useContext.cartItemState,
-      cartOpenState = _useContext.cartOpenState,
-      cartOpenDispatch = _useContext.cartOpenDispatch;
+  var _useContext2 = (0, _react.useContext)(_configureStore.Store),
+      userState = _useContext2.userState,
+      cartItemState = _useContext2.cartItemState,
+      cartOpenDispatch = _useContext2.cartOpenDispatch;
 
   var cartItemCounts = (0, _selectors2.selectCartItemCounts)(cartItemState);
   var user = (0, _selectors.getUser)(userState);
@@ -47837,7 +47895,7 @@ function TopBar() {
     id: "2852773768"
   }, ".top-bar.jsx-2852773768{min-height:36px;}.top-bar.jsx-2852773768 ul.jsx-2852773768 li.jsx-2852773768 a.jsx-2852773768{padding:0 19px;line-height:35px;font-size:14px;color:#ffffff;}.cart.jsx-2852773768 a.jsx-2852773768{font-size:12px;display:inline-block;background-color:#1dc5a3;line-height:35px;min-height:36px;font-size:14px;color:#ffffff;}.cart.jsx-2852773768 .item-number.jsx-2852773768{font-weight:800;}.account-login.jsx-2852773768 small.jsx-2852773768{color:rgba(255,255,255,0.5);padding:0 10px;}"));
 }
-},{"styled-jsx/style":"node_modules/styled-jsx/style.js","react":"node_modules/react/index.js","../../data/user/selectors.js":"src/data/user/selectors.js","../../data/configureStore":"src/data/configureStore.js","../../data/cart/selectors":"src/data/cart/selectors.js","../../data/cart/actions":"src/data/cart/actions.js"}],"src/components/Navigation/index.js":[function(require,module,exports) {
+},{"styled-jsx/style":"node_modules/styled-jsx/style.js","react":"node_modules/react/index.js","../../data/user/selectors.js":"src/data/user/selectors.js","../../data/configureStore":"src/data/configureStore.js","../../data/cart/selectors":"src/data/cart/selectors.js","../../data/cart/actions":"src/data/cart/actions.js","../../data/modal/actions":"src/data/modal/actions.js"}],"src/components/Navigation/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51099,52 +51157,7 @@ var _default = function _default() {
 };
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"src/data/modal/actionTypes.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.SHOW_MODAL = exports.CLOSE_MODAL = void 0;
-var CLOSE_MODAL = 'CLOSE_MODAL';
-exports.CLOSE_MODAL = CLOSE_MODAL;
-var SHOW_MODAL = 'SHOW_MODAL';
-exports.SHOW_MODAL = SHOW_MODAL;
-},{}],"src/data/modal/actions.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.showModal = exports.closeModal = void 0;
-
-var _actionTypes = require("./actionTypes");
-
-var closeModal = function closeModal() {
-  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return {
-    type: _actionTypes.CLOSE_MODAL,
-    payload: {
-      props: props
-    }
-  };
-};
-
-exports.closeModal = closeModal;
-
-var showModal = function showModal(type) {
-  var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return {
-    type: _actionTypes.SHOW_MODAL,
-    payload: {
-      type: type,
-      props: props
-    }
-  };
-};
-
-exports.showModal = showModal;
-},{"./actionTypes":"src/data/modal/actionTypes.js"}],"src/components/modals/LoginModal.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"src/components/modals/LoginModal.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51196,6 +51209,7 @@ function LoginModal(_ref) {
     className: "login-signup"
   }, /*#__PURE__*/_react.default.createElement(_Modal.default.Header, null, /*#__PURE__*/_react.default.createElement("button", {
     type: "button",
+    onClick: handleHide,
     "data-dismiss": "modal",
     "aria-label": "Close",
     className: "jsx-3215083560" + " " + "close"
@@ -51292,7 +51306,6 @@ function LoginModal(_ref) {
   var ref = (0, _useFocusEffect.default)();
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Modal.default, {
     show: show,
-    onHide: handleHide,
     className: "login-signup"
   }, /*#__PURE__*/_react.default.createElement(_Modal.default.Header, null, /*#__PURE__*/_react.default.createElement("button", {
     type: "button",
@@ -51391,8 +51404,8 @@ function PublicLayout(_ref) {
       cartOpenState = _useContext.cartOpenState,
       modalsState = _useContext.modalsState;
 
-  var isShoppingCartOpen = cartOpenState;
   var modals = modalsState;
+  var isShoppingCartOpen = cartOpenState;
   var modalComponents = {
     LoginModal: _LoginModal.default,
     SignupModal: _SignupModal.default
@@ -51405,7 +51418,6 @@ function PublicLayout(_ref) {
       }), /*#__PURE__*/_react.default.createElement(_Navigation.default, {
         stickyPaths: ['/products', '/products/.*', '/checkout']
       }), /*#__PURE__*/_react.default.createElement(Component, matchProps), /*#__PURE__*/_react.default.createElement(_Footer.default, null), modals.map(function (v, i) {
-        console.log(modals);
         var Modal = modalComponents[v.type];
         return /*#__PURE__*/_react.default.createElement(Modal, {
           key: v.type + ':' + i,
@@ -54006,8 +54018,7 @@ function App() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.user = user;
-exports.userInitialState = void 0;
+exports.user = exports.userInitialState = void 0;
 
 var _actionTypes = require("./actionTypes");
 
@@ -54017,7 +54028,7 @@ var userInitialState = _defineProperty({}, _actionTypes.LOG_IN, null);
 
 exports.userInitialState = userInitialState;
 
-function user() {
+var user = function user() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : userInitialState;
   var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -54031,7 +54042,9 @@ function user() {
     default:
       return state;
   }
-}
+};
+
+exports.user = user;
 },{"./actionTypes":"src/data/user/actionTypes.js"}],"src/data/home/reducers.js":[function(require,module,exports) {
 "use strict";
 
@@ -54406,7 +54419,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49256" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54764" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
