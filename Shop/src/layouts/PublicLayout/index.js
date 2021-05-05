@@ -11,32 +11,20 @@ import { Store } from '@/data/configureStore';
 
 export default function PublicLayout({ component, ...rest }) {
   const Component = component;
-  const { cartOpenState, modalsState } = useContext(Store);
-  const modals = modalsState;
-  const isShoppingCartOpen = cartOpenState
-  const modalComponents = {
-    LoginModal,
-    SignupModal,
-  };
+  const { cartOpenState } = useContext(Store);
+  const isShoppingCartOpen = cartOpenState;
 
   return (
     <Route
       {...rest}
       render={(matchProps) => (
         <>
-          <Drawer
-            isOpen={isShoppingCartOpen}
-            component={Cart}
-          />
-          <Navigation
-            stickyPaths={['/products', '/products/.*', '/checkout']}
-          />
+          <Drawer isOpen={isShoppingCartOpen} component={Cart} />
+          <Navigation stickyPaths={['/products', '/products/.*', '/checkout']} />
           <Component {...matchProps} />
           <Footer />
-          {modals.map((v, i) => {
-            const Modal = modalComponents[v.type];
-            return <Modal key={v.type + ':' + i} show={true} />;
-          })}
+          <LoginModal />
+          <SignupModal />
         </>
       )}></Route>
   );

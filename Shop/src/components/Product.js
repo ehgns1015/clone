@@ -6,21 +6,21 @@ import { Link } from 'react-router-dom';
 import { Store } from '@/data/configureStore';
 import { addCartItem } from '@/data/cart/actions';
 
-function Product({ id, name, price, info, avg_stars, total_reviews }) {
+function Product({ id, name, price, info, avg_stars, total_reviews, img_url }) {
   const { cartItemDispatch } = useContext(Store);
   const img = allImage[`item${id}`];
 
   const handleCartBtnClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    cartItemDispatch(addCartItem({ id, name, price, info, avg_stars, total_reviews }, 1));
+    cartItemDispatch(addCartItem({ id, name, price, info, avg_stars, total_reviews, img_url }, 1));
   };
 
   return (
     <>
       <div className="product card">
         <div className="img-container">
-          <img className="card-img-top" src={img} alt="" />
+          <img className="card-img-top" src={img_url} alt="" />
           <div className="img-options">
             <div className="img-options-content">
               <ul className="list-line mb-2 p-0" role="group">

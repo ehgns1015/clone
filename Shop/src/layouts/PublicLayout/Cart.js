@@ -6,7 +6,7 @@ import { Store } from '@/data/configureStore';
 import { getTotal } from '@/data/cart/selectors';
 import { closeCart, removeCartItem } from '@/data/cart/actions';
 
-const CartItem = memo(function C({ id, name, price, count }) {
+const CartItem = memo(function C({ id, name, price, count, img_url }) {
   const { cartItemDispatch } = useContext(Store);
 
   const handleItemBtnClicked = (e) => {
@@ -21,7 +21,7 @@ const CartItem = memo(function C({ id, name, price, count }) {
         ×
       </a>
       <a href="./product-detail.html">
-        <img width="250" height="250" src={allImage[`item${id}`]} alt={name} className="p-3" />
+        <img width="250" height="250" src={img_url} alt={name} className="p-3" />
         {name}
       </a>
       <span className="quantity">

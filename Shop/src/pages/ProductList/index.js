@@ -1,60 +1,42 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import Product from '@/components/Product';
 import BootstrapSlider from '@/components/BootstrapSlider';
+import { Store } from '@/data/configureStore';
+import { selectCategoryFilter, setPriceRangeFilter, selectSortFilter } from '@/data/productList/selectors';
+import { getProductList, getProductListWithPrice, resetPriceRangeFilter, resetSortByFilter, setCategoryFilter } from '@/data/productList/actions';
 
 export default function ProductList({ onAddCartItem }) {
+  const {
+    categoryState,
+    categoryDispatch,
+    filterState,
+    filterDispatch,
+    filteredListState,
+    filteredListDispatch,
+  } = useContext(Store);
   const breadcrumbLinks = [{ to: '/home', name: 'Home' }, { name: 'Product List' }];
-  const categories = [
-    { id: '1', name: 'Shirts', counts: 3 },
-    { id: '2', name: 'Dolls', counts: 2 },
-    { id: '3', name: 'Notes', counts: 5 },
-    { id: '4', name: 'Watches', counts: 1 },
-    { id: '5', name: 'Clothes', counts: 10 },
-    { id: '6', name: 'Shoes', counts: 4 },
-    { id: '7', name: 'GLoves', counts: 10 },
-  ];
-  const products = [
-    {
-      id: '1',
-      name: 'React Note',
-      price: 2000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 4,
-      total_reviews: 200,
-      category: 3,
-    },
-    {
-      id: '2',
-      name: 'React Product 2',
-      price: 13000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 4,
-      total_reviews: 5,
-      category: 4,
-    },
-    {
-      id: '3',
-      name: 'React Product 3',
-      price: 4000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 2,
-      total_reviews: 10,
-      category: 2,
-    },
-    {
-      id: '4',
-      name: 'React Product 4',
-      price: 5000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 1,
-      total_reviews: 10,
-      category: 5,
-    },
-  ];
-  const [priceFilter, setPriceFilter] = useState([250, 450]);
+  const categories = categoryState;
+  const selectedCategory = selectCategoryFilter(filterState);
+  const selectedSortFilter = selectSortFilter(filterState);
+  const selectedPriceRangeFilter = selectpriceRangeFilter(filterState);
+  const products = filteredListState;
 
-  const handleOnSlide = (values) => setPriceFilter(values);
+  console.log(selectedPriceRangeFilter);
+  const handleOnSlide = (values) => {
+    // console.log(values)
+    filterDispatch(setPriceRangeFilter(values));
+    filterDispatch(getProductListWithPrice(values));
+  };
+
+  const handleCategoryClick = (e, category) => {
+    e.stopPropagation();
+    e.preventDefault();
+    filterDispatch(setCategoryFilter(category));
+    filterDispatch(resetSortByFilter());
+    filterDispatch(resetPriceRangeFilter());
+    filterDispatch(getProductList(category.id));
+  };
 
   return (
     <>

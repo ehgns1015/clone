@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
 // eslint-disable-next-line react/display-name
-const LinkItem = React.forwardRef((props, ref) => {
+const LinkItem = forwardRef((props, ref) => {
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();

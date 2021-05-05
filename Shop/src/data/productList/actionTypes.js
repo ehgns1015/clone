@@ -1,0 +1,16 @@
+import { fail, loading, success } from '@/data/utils';
+
+export const GET_PRODUCT_LIST = 'GET_PRODUCT_LIST';
+export const GET_PRODUCT_LIST_SUCCESS = success(GET_PRODUCT_LIST);
+export const GET_PRODUCT_LIST_FAIL = fail(GET_PRODUCT_LIST);
+export const GET_PRODUCT_LIST_LOADING = loading(GET_PRODUCT_LIST);
+
+export const SET_CATEGORY_FILTER = 'SET_CATEGORY_FILTER';
+
+export const SET_PRICE_RANGE_FILTER = 'SET_PRICE_RANGE_FILTER';
+
+export const SET_SORT_BY_FILTER = 'SET_SORT_BY_FILTER';
+
+export const RESET_SORT_BY_FILTER = 'RESET_SORT_BY_FILTER';
+
+export const RESET_PRICE_RANGE_FILTER = 'RESET_PRICE_RANGE_FILTER';

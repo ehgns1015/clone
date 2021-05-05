@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import jQuery from 'jquery';
 import 'bootstrap-slider/dist/css/bootstrap-slider.min.css';
@@ -6,7 +6,7 @@ import 'bootstrap-slider';
 
 function BootstrapSlider(props) {
   const ref = React.useRef(null);
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     const slider = jQuery(ref.current).slider({
       min: props.min,
       max: props.max,
@@ -17,7 +17,15 @@ function BootstrapSlider(props) {
     slider.on('slide', (v) => {
       props.onSlide(v.value);
     });
+
+    slider.on('change', (v) => {
+      onSlide(v.value.newValue);
+    });
   }, []);
+
+  useEffect(() => {
+    jQuery(ref.current).slider('setValue', value);
+  }, [value]);
   return (
     <>
       <input ref={ref} type="text" />

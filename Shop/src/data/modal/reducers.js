@@ -2,7 +2,7 @@ import { CLOSE_MODAL, SHOW_MODAL } from './actionTypes';
 
 const modalsInitialState = [];
 
-const modals = (state = INITIAL_STATE, { type, payload }) => {
+const modals = (state = modalsInitialState, { type, payload }) => {
   switch (type) {
     case CLOSE_MODAL:
       state.shift();

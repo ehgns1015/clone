@@ -1,64 +1,119 @@
 import React from 'react';
+import { Form, Field } from 'formik';
+import { required, composeValidators, validEmail, validPhoneNumber } from '@/validators';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import TextMessage from '@/components/forms/TextMessage';
 
-function ShippingForm(props, ref) {
+function ShippingForm() {
   return (
-    <form ref={ref} action="" className="form-horizontal mt-4" role="form">
+    <Form className="form-horizontal mt-4">
       <div className="form-group">
-        <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <Row>
+          <Col>
             <label className="control-label">Customer Info</label>
-          </div>
-          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <input type="text" name="firstName" className="form-control" placeholder="Firtst Name" />
-          </div>
-          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <input type="text" name="lastName" className="form-control" placeholder="Last Name" />
-          </div>
-        </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Field
+              validate={required}
+              name="customer.firstName"
+              type="text"
+              className="form-control"
+              placeholder="Firtst Name"
+            />
+            <TextMessage name="customer.firstName" />
+          </Col>
+          <Col>
+            <Field
+              validate={required}
+              name="customer.lastName"
+              type="text"
+              className="form-control"
+              placeholder="Last Name"
+            />
+            <TextMessage name="customer.lastName" />
+          </Col>
+        </Row>
       </div>
       <div className="form-group">
-        <input type="email" name="email" className="form-control" placeholder="Email" />
+        <Field
+          validate={composeValidators(required, validEmail)}
+          name="customer.email"
+          type="email"
+          className="form-control"
+          placeholder="Email"
+        />
+        <TextMessage name="customer.email" />
       </div>
       <div className="form-group">
-        <input type="text" name="phone" className="form-control" placeholder="Phone Number" />
+        <Field
+          validate={composeValidators(required, validPhoneNumber)}
+          name="customer.phoneNumber"
+          type="text"
+          className="form-control"
+          placeholder="0xx-xxxx-xxxx"
+        />
+        <TextMessage name="customer.phoneNumber" />
       </div>
       <div className="form-group">
-        <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <Row>
+          <Col>
             <label className="control-label">Address</label>
-          </div>
-          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <input type="text" name="state" className="form-control" placeholder="State" />
-          </div>
-          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <input type="text" name="city" className="form-control" placeholder="City" />
-          </div>
-        </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Field validate={required} name="address.state" type="text" className="form-control" placeholder="State" />
+            <TextMessage name="address.state" />
+          </Col>
+          <Col>
+            <Field validate={required} name="address.city" type="text" className="form-control" placeholder="City" />
+            <TextMessage name="address.city" />
+          </Col>
+        </Row>
       </div>
       <div className="form-group">
-        <div className="row">
-          <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-            <input type="text" name="street" className="form-control" placeholder="Street Address" />
-          </div>
-          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <input type="text" name="postCode" className="form-control" placeholder="Postal Code" />
-          </div>
-        </div>
+        <Row>
+          <Col lg={8}>
+            <Field
+              validate={required}
+              name="address.street"
+              type="text"
+              className="form-control"
+              placeholder="Street Address"
+            />
+            <TextMessage name="address.street" />
+          </Col>
+          <Col>
+            <Field
+              validate={required}
+              name="address.postCode"
+              type="text"
+              className="form-control"
+              placeholder="Postal Code"
+            />
+            <TextMessage name="address.postCode" />
+          </Col>
+        </Row>
       </div>
       <div className="form-group">
         <label htmlFor="orderNote" className="control-label">
           Order Notes
         </label>
-        <textarea
-          className="form-control"
-          name="orderNote"
+        <Field
           id="orderNote"
           cols="20"
           rows="5"
-          placeholder="Note your order"></textarea>
+          name="orderNote"
+          component="textarea"
+          className="form-control"
+          placeholder="Note your order"
+        />
       </div>
-    </form>
+    </Form>
   );
 }
 
-export default React.forwardRef(ShippingForm);
+export default ShippingForm;

@@ -7,19 +7,11 @@ function QuantitySelect({ defaultQty, onQtyChange }) {
     setSelectedQty(event.target.value);
     onQtyChange(event.target.value);
   };
+  const nums = [1,2,3,4,5,6,7,8,9,10]
   return (
     <div className="quantity_select">
       <select name="quantity" title="Qty" className="qty" value={selectedQty} onChange={handleQtyChange}>
-        <option value={1}>1</option>
-        <option value={2}>2</option>
-        <option value={3}>3</option>
-        <option value={4}>4</option>
-        <option value={5}>5</option>
-        <option value={6}>6</option>
-        <option value={7}>7</option>
-        <option value={8}>8</option>
-        <option value={9}>9</option>
-        <option value={10}>10</option>
+        {nums.map((i)=><option key={i} value={i}>{i}</option>)}
       </select>
       <style jsx>{`
         @media (min-width: 1280px) {

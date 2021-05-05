@@ -1,0 +1,6 @@
+import { fail, loading, success } from '@/data/utils';
+
+export const GET_RELATED_PRODUCT_LIST = 'GET_RELATED_PRODUCT_LIST';
+export const GET_RELATED_PRODUCT_LIST_SUCCESS = success(GET_RELATED_PRODUCT_LIST);
+export const GET_RELATED_PRODUCT_LIST_FAIL = fail(GET_RELATED_PRODUCT_LIST);
+export const GET_RELATED_PRODUCT_LIST_LOADING = loading(GET_RELATED_PRODUCT_LIST);

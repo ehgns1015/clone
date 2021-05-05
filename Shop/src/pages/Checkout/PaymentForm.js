@@ -1,36 +1,67 @@
 import React from 'react';
+import { Form, Field } from 'formik';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { required, validCardExpDate, composeValidators, validCvc } from '@/validators';
+import TextMessage from '@/components/forms/TextMessage';
 
-function PaymentForm(props, ref) {
+function PaymentForm() {
   return (
-    <form ref={ref} action="" className="form-horizontal" role="form">
+    <Form className="form-horizontal">
       <div className="form-group">
         <label className="control-label">Card Number</label>
-        <input
+        <Field
+          validate={required}
+          name="payment.cardNumber"
+          type="text"
           className="form-control"
           autoComplete="cc-number"
-          name="cardNumber"
-          type="text"
           placeholder="**** **** **** ****"
         />
+        <TextMessage name="payment.cardNumber" />
       </div>
       <div className="form-group">
         <label className="control-label">Full Name</label>
-        <input className="form-control" autoComplete="cc-name" name="fullName" type="text" placeholder="Full Nmae" />
+        <Field
+          validate={required}
+          name="payment.fullName"
+          type="text"
+          className="form-control"
+          autoComplete="cc-name"
+          placeholder="Full Nmae"
+        />
+        <TextMessage name="payment.fullName" />
       </div>
       <div className="form-group">
-        <div className="row">
-          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <Row>
+          <Col>
             <label className="control-label">MM/YYYY</label>
-            <input className="form-control" name="expDate" type="text" placeholder="01/2019" autoComplete="cc-exp" />
-          </div>
-          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <Field
+              validate={composeValidators(required, validCardExpDate)}
+              name="payment.expDate"
+              type="text"
+              className="form-control"
+              autoComplete="cc-exp"
+              placeholder="01/2019"
+            />
+            <TextMessage name="payment.expDate" />
+          </Col>
+          <Col>
             <label className="control-label">CVC</label>
-            <input className="form-control" name="cvc" type="text" placeholder="***" autoComplete="cc-csc" />
-          </div>
-        </div>
+            <Field
+              validate={composeValidators(required, validCvc)}
+              name="payment.cvc"
+              type="text"
+              className="form-control"
+              autoComplete="cc-csc"
+              placeholder="***"
+            />
+            <TextMessage name="payment.cvc" />
+          </Col>
+        </Row>
       </div>
-    </form>
+    </Form>
   );
 }
 
-export default React.forwardRef(PaymentForm);
+export default PaymentForm;

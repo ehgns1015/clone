@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import allImage from '@/assets/images/products/*.jpeg';
 import Product from '@/components/Product';
 import ProductTabs from './ProductTabs';
 import QuantitySelect from './QuantitySelect';
 import { Link } from 'react-router-dom';
+import { Store } from '@/data/configureStore';
+import { getProductDetail } from '@/data/product/actions';
+import { getRelatedProductList } from '@/data/relatedProductList/actions';
 
 //onAddCartItem
-export default function ProductDetail({ match, onAddCartItem }) {
+export default function ProductDetail(props, { match }) {
+  const { productState, productDispatch, relatedProductState, relatedProductDispatch } = useContext(Store);
   const id = match.params.id;
   const img = allImage[`item${id}`];
   const breadcrumbLinks = [
@@ -17,48 +21,15 @@ export default function ProductDetail({ match, onAddCartItem }) {
     { name: 'Product Detail' },
   ];
   const [selectedQty, setQty] = useState(1);
-  const product = {
-    id: '3',
-    name: 'React Product 3',
-    price: 4000,
-    info: 'Lorem ipsum dolor sit amet',
-    avg_stars: 2,
-    total_reviews: 10,
-    category: {
-      id: 5,
-      name: 'Clothes',
-    },
-  };
-  const relatedProducts = [
-    {
-      id: '3',
-      name: 'React Product 3',
-      price: 4000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 2,
-      total_reviews: 10,
-      category: {
-        id: 3,
-        name: 'Notes',
-      },
-    },
-    {
-      id: '4',
-      name: 'React Product 4',
-      price: 5000,
-      info: 'Lorem ipsum dolor sit amet',
-      avg_stars: 1,
-      total_reviews: 10,
-      category: {
-        id: 5,
-        name: 'Clothes',
-      },
-    },
-  ];
-
+  const product = productState;
+  const relatedProducts = relatedProductState;
+  useEffect(() => {
+    productDispatch(getProductDetail(id));
+    relatedProductDispatch(getRelatedProductList(id));
+  }, []);
   const handleAddCartClicked = (e) => {
     e.preventDefault();
-    onAddCartItem(product, Number(selectedQty));
+    props.onAddCartItem(product, Number(selectedQty));
   };
 
   const handleQtyChange = (value) => setQty(value);
@@ -71,7 +42,7 @@ export default function ProductDetail({ match, onAddCartItem }) {
           <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <div className="media">
-                <img src={img} alt="Image" />
+                <img src={product.img_url} alt="Image" />
                 <div className="media-body">
                   <h2 className="mt-0">{product.name}</h2>
                   <h3>{product.price}</h3>
@@ -80,8 +51,8 @@ export default function ProductDetail({ match, onAddCartItem }) {
                     <br />
                     <span className="product-category mt-5">
                       Category:{' '}
-                      <Link className="navy-link" to={`/products?category=${product.category.name}`}>
-                        {product.category.name}
+                      <Link className="navy-link" to={`/products?category=${product.category?.name}`}>
+                        {product.category?.name}
                       </Link>
                     </span>
                   </p>
@@ -107,7 +78,7 @@ export default function ProductDetail({ match, onAddCartItem }) {
           <div className="row items">
             {relatedProducts.map((p) => (
               <div key={p.id} className="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-                <Product {...p} onCartBtnClick={onAddCartItem} />
+                <Product {...p} />
               </div>
             ))}
           </div>

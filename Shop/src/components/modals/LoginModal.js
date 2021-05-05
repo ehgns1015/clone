@@ -3,8 +3,23 @@ import Modal from 'react-bootstrap/Modal';
 import useFocusEffect from '@/hooks/useFocusEffect';
 import { showModal, closeModal } from '@/data/modal/actions';
 import { Store } from '@/data/configureStore';
+import { showModal, closeModal } from '@/data/modal/actions.js';
+import { Form, Formik, Field } from 'formik';
+import { composeValidators, required, validEmail } from '@/validators';
+import Alert from 'react-bootstrap/Alert';
+import { selectIsOpen } from '@/data/modal/selectors';
+import { login } from '@/data/user/actions';
+import { getLoginError } from '@/data/user/selectors';
+
+const INITIAL_VALUES = {
+  email: '',
+  password: '',
+};
 
 export default function LoginModal({ show }) {
+  const show = !!useSelector(selectIsOpen('LoginModal'));
+  const loginError = useSelector(getLoginError);
+  console.log(loginError);
   const { modalsDispatch } = useContext(Store);
   const handleHide = () => modalsDispatch(closeModal());
   const handleSignupClick = (e) => {
@@ -12,56 +27,67 @@ export default function LoginModal({ show }) {
     handleHide();
     modalsDispatch(showModal('SignupModal'));
   };
+  const handleSubmit = (values) => {
+    dispatch(login(values));
+  };
   const ref = useFocusEffect();
   useEffect(() => ref.current && ref.current.focus(), []);
   return (
     <>
       <Modal show={show} onHide={handleHide} className="login-signup">
         <Modal.Header>
-          <button type="button" onClick={handleHide} className="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" className="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </Modal.Header>
-        <form action="" method="POST">
-          <div className="modal-body p-5">
-            <h4 className="modal-title mb-5">Login</h4>
-            <div className="form-group">
-              <label htmlFor="login-email">EMAIL</label>
-              <input
-                ref={ref}
-                type="text"
-                id="login-email"
-                name="email"
-                className="form-control email"
-                placeholder="example@gmail.com"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="login-password">PASSWORD</label>
-              <input
-                type="password"
-                id="login-password"
-                name="email"
-                className="form-control email"
-                placeholder="example@gmail.com"
-              />
-              <a href="" className="navy-link">
-                Login Lost your password?
-              </a>
-            </div>
-          </div>
-          <div className="modal-footer flex-column p-0">
-            <button type="button" className="btn btn-primary align-self-end mr-5">
-              Login
-            </button>
-            <div className="signup-today text-center align-self-stretch flex-fill m-0 mt-3">
-              <p>Don’t have an account?</p>
-              <a onClick={handleSignupClick} className="navy-link">
-                Sign Up Today
-              </a>
-            </div>
-          </div>
-        </form>
+        <Formik initialValues={INITIAL_VALUES} onSubmit={handleSubmit}>
+          {({ errors }) => (
+            <Form>
+              <div className="modal-body p-5">
+                <h4 className="modal-title mb-5">Login</h4>
+                <div className="form-group">
+                  <label htmlFor="login-email">EMAIL</label>
+                  <Field
+                    innerRef={ref}
+                    validate={composeValidators(required, validEmail)}
+                    name="email"
+                    type="email"
+                    className="form-control email"
+                    placeholder="Email"
+                  />
+                  {errors.email && (
+                    <Alert className="mt-3" variant="danger">
+                      {errors.email}
+                    </Alert>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="login-password">PASSWORD</label>
+                  <Field id="login-password" name="password" type="password" className="form-control email" />
+                  <a href="" className="navy-link">
+                    Login Lost your password?
+                  </a>
+                </div>
+                {loginError && (
+                  <Alert className="mt-3" variant="danger">
+                    {loginError.message}
+                  </Alert>
+                )}
+              </div>
+              <div className="modal-footer flex-column p-0">
+                <button type="submit" className="btn btn-primary align-self-end mr-5">
+                  Login
+                </button>
+                <div className="signup-today text-center align-self-stretch flex-fill m-0 mt-3">
+                  <p>Don’t have an account?</p>
+                  <a onClick={handleSignupClick} className="navy-link">
+                    Sign Up Today
+                  </a>
+                </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </Modal>
       <style jsx global>{`
         .login-signup label {
